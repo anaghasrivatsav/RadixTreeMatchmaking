@@ -19,8 +19,9 @@ MatchMaker::~MatchMaker()
     
 }
 
-bool MatchMaker::customCompare(const EmailCount &a, const EmailCount &b)
+bool MatchMaker::customCompare( EmailCount &a,  EmailCount &b)
 {
+    std::cerr <<"comparing" <<std::endl;
     if(a.count > b.count)
     {
         return true;
@@ -29,6 +30,7 @@ bool MatchMaker::customCompare(const EmailCount &a, const EmailCount &b)
     {
         return false;
     }
+
     
     return (a.email > b.email);
         
@@ -58,9 +60,10 @@ std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email,int 
         
             std::vector<AttValPair>  specificCompatible= std::vector<AttValPair>();
             specificCompatible= attributeTranslator.FindCompatibleAttValPairs(sourceAttVal[i]); // find all the attributes compatible to this an attribute
-            for( int j = 0; i<specificCompatible.size(); j++)
+            for( int j = 0; j<specificCompatible.size(); j++)
             {
                 std::string attribute = specificCompatible[j].attribute;
+                //std::cerr <<specificCompatible[j].value<< std::endl;
                 std::string value= specificCompatible[j].value;
                 
                 if( duplicationPreventioncCompatible.find(attribute+value) == duplicationPreventioncCompatible.end())// only if this compatible attval pair is not in the vector alr add it to the vector
@@ -91,9 +94,12 @@ std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email,int 
                 }
                 else
                 {
-                    std::cerr <<(*x)<< std::endl;
-                    (*x)= (*x)++;
-                    std::cerr <<(*x)<< std::endl;
+               
+                    int y = (*x)+1;
+                    int* z= compatibleCount.search(people[j]);
+                    (*z)= y;
+                    
+                  
                 }
                 allPeople.insert(people[j]);
                 
@@ -111,7 +117,7 @@ std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email,int 
         }
     }
     
-    sort( matches.begin(), matches.end(), &MatchMaker::customCompare);
+    //sort( matches.begin(), matches.end(), &MatchMaker::customCompare);
     //sort vector
     
     return matches;

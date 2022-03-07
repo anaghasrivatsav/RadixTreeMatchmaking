@@ -56,7 +56,7 @@ void PersonProfile::AddAttValPair(const AttValPair& attval)
 }
 int PersonProfile::GetNumAttValPairs() const
 {
-   
+    
     return size;
 }
 bool PersonProfile::GetAttVal(int attribute_num, AttValPair& attval) const

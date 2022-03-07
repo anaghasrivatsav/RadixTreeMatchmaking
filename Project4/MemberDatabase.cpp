@@ -49,6 +49,8 @@ bool MemberDatabase::LoadDatabase(std::string filename)
                   }
                   PersonProfile *p= new PersonProfile ( name, email);// good needs this to be dynamically allocated--- inserted into the radix tree
                   m_profiles.insert(email, p);
+                
+                
                   
               }
             else if( linenum== 2)
@@ -142,7 +144,9 @@ const PersonProfile* MemberDatabase::GetMemberByEmail(std::string email) const
 {
     if( m_profiles.search(email)== nullptr)
     {
+        
         return nullptr;
     }
+
     return *(m_profiles.search(email));
 }

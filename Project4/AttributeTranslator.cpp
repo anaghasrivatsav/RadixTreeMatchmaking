@@ -56,6 +56,8 @@ bool AttributeTranslator::Load(std::string filename)
        // std::cout<<line.substr(i).substr(0,k-1)<< std::endl;
       // std::cout<<line.substr(i).substr(k)<< std::endl;
         
+        
+        
         AttValPair a =  AttValPair( attribute, value);
        if( m_tree.search(line.substr(0,i-1)) == nullptr)
        {

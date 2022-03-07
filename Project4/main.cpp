@@ -51,6 +51,23 @@ int main()
         std::cerr<< trans1[i].attribute;
         std::cerr<< trans1[i].value<< std::endl;
     }
+    std::cerr << ""<< std::endl;
+    std::cerr << ""<< std::endl;
+    
+    AttValPair pair3= AttValPair("trait", "unlovable");
+    std::vector<AttValPair> trans3= a.FindCompatibleAttValPairs(pair3);
+    for ( int i = 0; i<trans3.size(); i++)
+    {
+        std::cerr<< trans3[i].attribute;
+        std::cerr<< trans3[i].value<< std::endl;
+    }
+    
+    //eloquent
+    //cosplaying
+    
+    std::cerr << ""<< std::endl;
+    std::cerr << ""<< std::endl;
+    
     AttValPair pair2= AttValPair("hobby", "eating");
     std::vector<AttValPair> trans2= a.FindCompatibleAttValPairs(pair2);
     assert(trans2.size()== 0);
@@ -93,7 +110,7 @@ int main()
     
     MatchMaker matcher= MatchMaker(m, a);
     std::vector<EmailCount> emailCount = std::vector<EmailCount>();
-    emailCount= matcher.IdentifyRankedMatches("Zaire Dale", 3);
+    emailCount= matcher.IdentifyRankedMatches("ZairDale6049@icloud.com", 5);
     std::cerr<< emailCount.size() << std::endl;
     
     
