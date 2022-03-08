@@ -37,16 +37,21 @@ std::string PersonProfile::GetEmail() const
 }
 void PersonProfile::AddAttValPair(const AttValPair& attval)
 {
+
     if (m_keys.find(attval.attribute + "," + attval.value) == m_keys.end())
     {
         AttValPair* a = new AttValPair( attval.attribute, attval.value); // pushed into radix tree so its ok if its new
         m_valpairs.push_back(a);
         size++;
     }
+   
     
     m_keys.insert(attval.attribute + "," + attval.value);
+  
     
-       m_tree.insert(attval.attribute, attval.value);
+  
+    
+      m_tree.insert(attval.attribute, attval.value);
     
     
        

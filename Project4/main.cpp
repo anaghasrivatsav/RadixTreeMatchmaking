@@ -19,10 +19,29 @@
 int main()
 {
     AttributeTranslator a;
-   a.Load("/Users/anaghasrivatsav/Downloads/Unhinged/translator.txt");
+  // a.Load("/Users/anaghasrivatsav/Downloads/Unhinged/translator.txt");
     RadixTree<std::string> b;
-    b.insert( "hello", "goodbye");
-    assert( *(b.search("hello"))== "goodbye");
+    b.insert( "hello", "1");
+    assert( *(b.search("hello"))== "1");
+    b.insert("hell", "2");
+    assert( (*b.search("hell"))== "2");
+    b.insert( "cat", "3");
+    assert( *(b.search("cat"))== "3");
+    b.insert( "cats", "4");
+    assert( *(b.search("cats"))== "4");
+    b.insert( "bash", "5");
+    assert( *(b.search("bash"))== "5");
+    b.insert( "cash", "6");
+    assert( *(b.search("cash"))== "6");
+    b.insert( "tangerine", "7");
+    assert( *(b.search("tangerine"))== "7");
+    b.insert( "tang", "8");
+    assert( *(b.search("tang"))== "8");
+    b.insert( "tang", "9");
+    assert( *(b.search("tang"))== "9");
+   
+    
+    
     PersonProfile pp ("Albedo", "kriedenprinze@monstadt.com");
     pp.AddAttValPair(AttValPair("hello", "hi"));
     pp.AddAttValPair(AttValPair("hello", "hi"));
@@ -44,7 +63,9 @@ int main()
         std::cerr << attval1->value << std::endl;
         
     }
-    AttValPair pair1= AttValPair("job", "engineer");
+     
+     
+    /*AttValPair pair1= AttValPair("job", "engineer");
     std::vector<AttValPair> trans1= a.FindCompatibleAttValPairs(pair1);
     for ( int i = 0; i<trans1.size(); i++)
     {
@@ -118,7 +139,7 @@ int main()
     
     
     
-    
+    */
     
     
 }
