@@ -22,12 +22,16 @@ public:
  }
  ~RadixTree()
     {
-     /*for( int i =0; i< allNodes.size(); i++)
+     for( int i =0; i< allNodes.size(); i++)
      {
-         delete allNodes[i]->value;
+         if( allNodes[i]->value != nullptr)
+         {
+             delete allNodes[i]->value;
+         }
+      
          delete allNodes[i];
      }
-      */
+      
     }
     
     

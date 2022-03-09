@@ -120,7 +120,7 @@ std::vector<AttValPair> AttributeTranslator::FindCompatibleAttValPairs(const Att
     }
    
     std::vector<AttValPair> *v1=  (m_vector_tree.search(sourceString));
-    std::cerr<< v1->size()<< std::endl;
+   // std::cerr<< v1->size()<< std::endl;
    // std::cerr<< "first" << (*v1)[0].attribute << "c"<< std::endl;
     return (*v1);
     

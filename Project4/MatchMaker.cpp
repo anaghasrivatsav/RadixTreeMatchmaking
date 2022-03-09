@@ -40,7 +40,8 @@ std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email,int 
     const PersonProfile* pp = memberDatabase.GetMemberByEmail(email);
     std::vector<AttValPair> sourceAttVal=  std::vector<AttValPair>();
     int cycle = pp->GetNumAttValPairs();
-   
+   // TO DO Check if person profile is nullptr and return an empty vector
+    
     // creates a vector of all the attValPairs of this person
     for( int i = 0; i< cycle; i++)
     {
@@ -76,50 +77,76 @@ std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email,int 
            
         
     }
+    std::cerr<< compatibleAttVal.size()<< "SIZE" << std::endl;
     
     RadixTree<int> compatibleCount=  RadixTree<int>();
     std::set<std::string> allPeople = std::set<std::string>();
+    std::string person;
+    int countPeople= 0;
     
         for( int i = 0; i<compatibleAttVal.size(); i++)
         {
-            std::vector<std::string>* people = new std::vector<std::string>();
-            *people= memberDatabase.FindMatchingMembers(compatibleAttVal[i]);
+            std::vector<std::string> people = memberDatabase.FindMatchingMembers(compatibleAttVal[i]);
+            std::cerr << compatibleAttVal[i].attribute;
+            std::cerr << compatibleAttVal[i].value<< std::endl;
+            std::cerr << people.size() << "number of emails for attval"<< std::endl;
+            countPeople+= people.size();
             
-            for( int j =0; j<people->size(); j++ )
+            for( int j =0; j<people.size(); j++ )
             {
-                int* x= (compatibleCount.search((*people)[j]));
-                if (x== nullptr)
+                 person = (people)[j];
+            
+                if ( compatibleCount.search(person)== nullptr)
                 {
-                    compatibleCount.insert((*people)[j], 1);
+                    compatibleCount.insert(person, 1);
+                    
                 }
                 else
                 {
+                    int *x= compatibleCount.search(person);
+                    //std::cerr << *x << "number of traits"<< std::endl;
                
                     int y = (*x)+1;
-                    int* z= compatibleCount.search((*people)[j]);
+                    int* z= compatibleCount.search(person);
                     (*z)= y;
+                    std::cerr<< people[j]<< std::endl;
+                    std::cerr << *x << "number of traits"<< std::endl;
                     
                   
                 }
-                allPeople.insert((*people)[j]);
+                if(*compatibleCount.search(person) >= threshold)
+                {
+                    allPeople.insert(person);
+                    std::cerr<< *compatibleCount.search(person)<< "please work count"<< std::endl;
+                }
+               
                 
             }
+           
+            
         }
+    std::cerr << allPeople.size() <<"number of emails"<< std::endl;
+    std::cerr << countPeople <<"number of ppl from radix"<< std::endl;
+  
+    
     std::vector<EmailCount> matches = std::vector<EmailCount>();
     for (std::set<std::string>::iterator it=allPeople.begin(); it!=allPeople.end(); ++it)
     {
-        int* count = compatibleCount.search((*it));
+        std::string input = *it;
+        std::cerr<< input;
+        int* count = compatibleCount.search(input);
         if(*(count) >= threshold)
         {
-            EmailCount current = EmailCount((*it), *(count));
+            std::cerr << *count<< " int of count" << std::endl;
+            EmailCount current =  EmailCount((*it), *(count));
             matches.push_back(current);
           // insert it into a vector
-        }
+    }
     }
     
     //sort( matches.begin(), matches.end(), &MatchMaker::customCompare);
     //sort vector
-    std::cerr <<matches.size();
+    std::cerr <<matches.size()<< std::endl;
     return matches;
     
     

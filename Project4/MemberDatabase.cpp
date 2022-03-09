@@ -112,7 +112,7 @@ bool MemberDatabase::LoadDatabase(std::string filename)
 
       
     }
-    return false;
+    return true;
 }
 
 

@@ -144,10 +144,22 @@ int main()
     assert(pp2->GetName()=="Zaire Dale");
     assert(pp2->GetEmail()== "ZairDale6049@icloud.com" );
     
+    std::vector< std::string> match1= m.FindMatchingMembers(pair3);
+    sort( match1.begin(), match1.end());
+    std::set< std::string> match2;
+    
+    for( int i = 0; i< match1.size(); i++)
+    {
+        //std::cerr<< match1[i]<<"matching for pair3" << std::endl;
+        match2.insert( match1[i]);
+    }
+    std::cerr<< match1.size()<< std::endl;
+    std::cerr<< match2.size()<< std::endl;
+    
     MatchMaker matcher= MatchMaker(m, a);
     std::vector<EmailCount> emailCount = std::vector<EmailCount>();
    ;
-    std::cerr<< matcher.IdentifyRankedMatches("ZairDale6049@icloud.com", 3).size() << std::endl;
+    std::cerr<< matcher.IdentifyRankedMatches("ZairDale6049@icloud.com", 5).size() << std::endl;
     
     
     
@@ -158,10 +170,13 @@ int main()
     
     
 }
+ 
+ 
 
 /*
-const std::string MEMBERS_FILE    = "members.txt";
-const std::string TRANSLATOR_FILE = "translator.txt";
+
+const std::string MEMBERS_FILE    = "/Users/anaghasrivatsav/Downloads/Unhinged/members.txt";
+const std::string TRANSLATOR_FILE = "/Users/anaghasrivatsav/Downloads/Unhinged/translator.txt";
 
 bool findMatches(const MemberDatabase& mdb, const AttributeTranslator& at);
 
@@ -231,4 +246,5 @@ bool findMatches(const MemberDatabase& mdb, const AttributeTranslator& at)
     std::cout << std::endl;
     return true;
 }
+
 */
