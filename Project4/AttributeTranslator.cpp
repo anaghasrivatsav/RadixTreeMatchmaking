@@ -78,7 +78,14 @@ bool AttributeTranslator::Load(std::string filename)
           
        }
         m_tree.insert( line.substr(0,i-1), &a);
+        std::cerr << a.attribute<< std::endl;
         
+        std::string attr = (*m_tree.search(line.substr(0,i-1)))->attribute;
+        std::cerr << attr<< std::endl;
+        
+        std::vector<AttValPair> *attr1=  *( m_vector_tree.search(line.substr(0,i-1)));
+        
+        ///std::cerr << << std::endl;
         
        
         
@@ -97,8 +104,10 @@ std::vector<AttValPair> AttributeTranslator::FindCompatibleAttValPairs(const Att
         std::vector<AttValPair> v;
         return (v);
     }
-    std::vector<AttValPair> *v=  *(m_vector_tree.search(sourceString));
-    return (*v);
+   
+    std::vector<AttValPair> *v1=  *(m_vector_tree.search(sourceString));
+    std::cerr<< "first" << (*v1)[0].attribute << "c"<< std::endl;
+    return (*v1);
     
 }
 

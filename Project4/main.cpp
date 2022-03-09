@@ -19,10 +19,11 @@
 int main()
 {
     AttributeTranslator a;
-  // a.Load("/Users/anaghasrivatsav/Downloads/Unhinged/translator.txt");
+  a.Load("/Users/anaghasrivatsav/Downloads/Unhinged/translator.txt");
     RadixTree<std::string> b;
     b.insert( "hello", "1");
     assert( *(b.search("hello"))== "1");
+
     b.insert("hell", "2");
     assert( (*b.search("hell"))== "2");
     b.insert( "cat", "3");
@@ -39,8 +40,18 @@ int main()
     assert( *(b.search("tang"))== "8");
     b.insert( "tang", "9");
     assert( *(b.search("tang"))== "9");
-   
-    
+    assert( *(b.search("hello"))== "1");
+     assert( (*b.search("hell"))== "2");
+     assert( *(b.search("cat"))== "3");
+     assert( *(b.search("cats"))== "4");
+     assert( *(b.search("bash"))== "5");
+     assert( *(b.search("cash"))== "6");
+     assert( *(b.search("tangerine"))== "7");
+     assert( *(b.search("tang"))== "9");
+     b.insert( "tang", "9");
+     assert( *(b.search("tang"))== "9");
+
+ 
     
     PersonProfile pp ("Albedo", "kriedenprinze@monstadt.com");
     pp.AddAttValPair(AttValPair("hello", "hi"));
@@ -51,9 +62,10 @@ int main()
     assert(pp.GetName()=="Albedo");
     assert(pp.GetEmail()== "kriedenprinze@monstadt.com");
     pp.AddAttValPair(AttValPair("CS", "isannoying"));
-    pp.AddAttValPair(AttValPair("Math", "isannoying"));
+    pp.AddAttValPair(AttValPair("math", "isannoying"));
     pp.AddAttValPair(AttValPair("CS", "isfun"));
     assert( pp.GetNumAttValPairs()== 5);
+
     AttValPair* attval1 = new AttValPair("attribuet1", "value1");
     for( int i = 0; i< 5; i++)
     {
@@ -65,7 +77,7 @@ int main()
     }
      
      
-    /*AttValPair pair1= AttValPair("job", "engineer");
+   AttValPair pair1= AttValPair("trait", "transparent");
     std::vector<AttValPair> trans1= a.FindCompatibleAttValPairs(pair1);
     for ( int i = 0; i<trans1.size(); i++)
     {
@@ -126,6 +138,8 @@ int main()
         
     }
     
+    
+    std::cerr << pp2->GetName();
     assert(pp2->GetName()=="Zaire Dale");
     assert(pp2->GetEmail()== "ZairDale6049@icloud.com" );
     
@@ -139,7 +153,7 @@ int main()
     
     
     
-    */
+    
     
     
 }
