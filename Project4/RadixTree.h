@@ -58,6 +58,14 @@ public:
      }
       
      
+    
+    /* const  ValueType *v= &value1;
+     
+     m[key]=  const_cast<ValueType*>(v);
+   
+     */
+     // m.insert( std::pair<key,value1>);
+     
      //(m)[key].insert(value1);
      
     }
@@ -74,7 +82,22 @@ public:
         }
         
         /*
-        typename std::map<std::string, std::unordered_set<ValueType>>::const_iterator it = m.begin();
+        
+        if(m.count(key) == 0)
+        {
+            return nullptr;
+        }
+        else
+        {
+            typename std::map<std::string,ValueType*>::const_iterator it = m.begin();
+            it= m.find(key);
+            return (it->second);
+           // ValueType* v=  m[key];
+           // return const_cast<ValueType*>(v);
+        }
+         */
+        
+        /*
         it= m.find(key);
        
         if ( it == m.end())
@@ -93,14 +116,14 @@ public:
             
             
         }
+         
          */
-            
             
        
         
     }
 private:
-    std::map< std::string, std::unordered_set<ValueType>> m;
+    std::map< std::string, ValueType*> m;
    
     struct Node{
         std::string word = "";

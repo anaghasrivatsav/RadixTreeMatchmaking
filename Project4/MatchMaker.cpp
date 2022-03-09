@@ -77,31 +77,31 @@ std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email,int 
         
     }
     
-    RadixTree<int> compatibleCount= RadixTree<int>();
+    RadixTree<int> compatibleCount=  RadixTree<int>();
     std::set<std::string> allPeople = std::set<std::string>();
     
         for( int i = 0; i<compatibleAttVal.size(); i++)
         {
-            std::vector<std::string> people = std::vector<std::string>();
-            people= memberDatabase.FindMatchingMembers(compatibleAttVal[i]);
+            std::vector<std::string>* people = new std::vector<std::string>();
+            *people= memberDatabase.FindMatchingMembers(compatibleAttVal[i]);
             
-            for( int j =0; j<people.size(); j++ )
+            for( int j =0; j<people->size(); j++ )
             {
-                int* x= (compatibleCount.search(people[j]));
+                int* x= (compatibleCount.search((*people)[j]));
                 if (x== nullptr)
                 {
-                    compatibleCount.insert(people[j], 1);
+                    compatibleCount.insert((*people)[j], 1);
                 }
                 else
                 {
                
                     int y = (*x)+1;
-                    int* z= compatibleCount.search(people[j]);
+                    int* z= compatibleCount.search((*people)[j]);
                     (*z)= y;
                     
                   
                 }
-                allPeople.insert(people[j]);
+                allPeople.insert((*people)[j]);
                 
             }
         }
@@ -119,7 +119,7 @@ std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email,int 
     
     //sort( matches.begin(), matches.end(), &MatchMaker::customCompare);
     //sort vector
-    
+    std::cerr <<matches.size();
     return matches;
     
     

@@ -59,35 +59,49 @@ bool AttributeTranslator::Load(std::string filename)
         
         
         AttValPair a =  AttValPair( attribute, value);
-       if( m_tree.search(line.substr(0,i-1)) == nullptr)
+       if( m_vector_tree.search(line.substr(0,i-1)) == nullptr)
        {
-           std::vector<AttValPair> *v= new std::vector<AttValPair>(); // this new is ok because it is inserted into the radix tree-- must delete from the radix tree
+           std::vector<AttValPair>* v=  new std::vector<AttValPair>(); // this new is ok because it is inserted into the radix tree-- must delete from the radix tree
            (*v).push_back(AttValPair(attribute, value));
-           m_vector_tree.insert( line.substr(0,i-1), v);
+           m_vector_tree.insert( line.substr(0,i-1), *v);
+           
+          // std::cerr << v->size()<< std::endl;
+     
+
+          // std::cerr << attr1->size()<< std::endl;
+           
+           
            m_keys.insert(line.substr(0,i-1)+attribute+","+value);// add pair into set
        }
        else
        {
            if(m_keys.find(line.substr(0,i-1)+attribute+","+value) == m_keys.end())// if pair is not already in the vector
            {
-               std::vector<AttValPair> *v=  *( m_vector_tree.search(line.substr(0,i-1)));
-               (*v).push_back(AttValPair(attribute, value));
+               std::vector<AttValPair> *v=  ( m_vector_tree.search(line.substr(0,i-1)));
+               (v)->push_back(AttValPair(attribute, value));
+               //m_vector_tree.insert(line.substr(0,i-1), v);
                m_keys.insert(line.substr(0,i-1)+attribute+","+value);
+           
+               std::vector<AttValPair> *attr1=  ( m_vector_tree.search(line.substr(0,i-1)));
+              // std::cerr << attr1->size()<< std::endl;
+               //std::cerr << v.size()<< std::endl;
            }
            
           
        }
-        m_tree.insert( line.substr(0,i-1), &a);
-        std::cerr << a.attribute<< std::endl;
+       // m_tree.insert( line.substr(0,i-1), a);
         
-        std::string attr = (*m_tree.search(line.substr(0,i-1)))->attribute;
-        std::cerr << attr<< std::endl;
+     
         
-        std::vector<AttValPair> *attr1=  *( m_vector_tree.search(line.substr(0,i-1)));
+        //std::string attr = (m_tree.search(line.substr(0,i-1)))->attribute;
+        //std::cerr << attr<< std::endl;
+        
         
         ///std::cerr << << std::endl;
         
        
+
+   
         
        
     }
@@ -105,8 +119,9 @@ std::vector<AttValPair> AttributeTranslator::FindCompatibleAttValPairs(const Att
         return (v);
     }
    
-    std::vector<AttValPair> *v1=  *(m_vector_tree.search(sourceString));
-    std::cerr<< "first" << (*v1)[0].attribute << "c"<< std::endl;
+    std::vector<AttValPair> *v1=  (m_vector_tree.search(sourceString));
+    std::cerr<< v1->size()<< std::endl;
+   // std::cerr<< "first" << (*v1)[0].attribute << "c"<< std::endl;
     return (*v1);
     
 }

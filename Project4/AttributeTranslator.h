@@ -27,8 +27,8 @@ public:
     bool Load(std::string filename);
     std::vector<AttValPair> FindCompatibleAttValPairs(const AttValPair& source) const;
 private:
-    RadixTree<AttValPair*> m_tree;
-    RadixTree<std::vector<AttValPair>*> m_vector_tree;
+    RadixTree<AttValPair> m_tree;
+    RadixTree<std::vector<AttValPair>> m_vector_tree;
     std::set<std::string> m_keys;
     
 };

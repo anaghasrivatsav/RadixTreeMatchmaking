@@ -47,8 +47,8 @@ bool MemberDatabase::LoadDatabase(std::string filename)
                   {
                       return false;
                   }
-                  PersonProfile *p= new PersonProfile ( name, email);// good needs this to be dynamically allocated--- inserted into the radix tree
-                  m_profiles.insert(email, p);
+                  PersonProfile* p=  new PersonProfile ( name, email);// good needs this to be dynamically allocated--- inserted into the radix tree
+                  m_profiles.insert(email, *p);
                 
                 
                   
@@ -60,7 +60,7 @@ bool MemberDatabase::LoadDatabase(std::string filename)
             }
             else if( attributeNum> 0)
             {
-                PersonProfile *p1= *(m_profiles.search(email));
+                PersonProfile *p1= (m_profiles.search(email));
                 
                 std::string second = line;
                 int comma = 0;
@@ -83,17 +83,17 @@ bool MemberDatabase::LoadDatabase(std::string filename)
                 
                 if( m_pairs.search(attribute+","+value)== nullptr)// if this attribute value pair is not already in the tree
                 {
-                    std::vector<std::string> *v= new std::vector<std::string>(); // create a new vector
+                    std::vector<std::string>* v=  new std::vector<std::string>(); // create a new vector
                     // ok if this is dynamically allocated bc it is pushed into the radix tree
-                    (*v).push_back(email); // push back first email
+                    (v)->push_back(email); // push back first email
                     m_added.insert(email+attribute+value); // insert the attribute,value,email into set to prevent duplication
-                    m_pairs.insert(attribute+","+value, v); // insert key + email vector into tree
+                    m_pairs.insert(attribute+","+value, *v); // insert key + email vector into tree
                 }
                
                 else if ( m_added.find(email+attribute+value)== m_added.end())// if this email, attribute and value are not already in the tree
                 {
-                    std::vector<std::string> *v = *m_pairs.search(attribute+","+value); // return a pointer to the vector
-                    (*v).push_back(email); // insert new email into the vector in the tree
+                    std::vector<std::string> *v = m_pairs.search(attribute+","+value); // return a pointer to the vector
+                    (v)->push_back(email); // insert new email into the vector in the tree
                     m_added.insert(email+attribute+value); // insert into set to prevent future duplication
                 }
               
@@ -131,7 +131,7 @@ std::vector<std::string> MemberDatabase::FindMatchingMembers(const AttValPair& i
     }
     else
     {
-        std::vector<std::string> *v = *m_pairs.search(attribute+","+value);
+        std::vector<std::string> *v = m_pairs.search(attribute+","+value);
         return *(v);
     }
     
@@ -148,5 +148,5 @@ const PersonProfile* MemberDatabase::GetMemberByEmail(std::string email) const
         return nullptr;
     }
 
-    return *(m_profiles.search(email));
+    return (m_profiles.search(email));
 }
